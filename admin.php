@@ -17,7 +17,7 @@
 		</div>';
 	}
 	else {
-		$_SESSION['message'] = '<p>Molimo vas da se registrirate ili ulogirajte svojim podacima!!</p>';
+		$_SESSION['message'] = '<p>Molimo vas da se registrirate ili ulogirate svojim podacima!!</p>';
 		header("Location: index.php?menu=6");
 	}
 ?>

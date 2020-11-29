@@ -41,16 +41,16 @@
 		$row = @mysqli_fetch_array($result);
 		print '
 		<h2>Korisnički profil</h2>
-		<p><b>First name:</b> ' . $row['firstname'] . '</p>
-		<p><b>Last name:</b> ' . $row['lastname'] . '</p>
-		<p><b>Username:</b> ' . $row['username'] . '</p>';
+		<p><b>Ime:</b> ' . $row['firstname'] . '</p>
+		<p><b>Prezime:</b> ' . $row['lastname'] . '</p>
+		<p><b>Korisničko ime:</b> ' . $row['username'] . '</p>';
 		$_query  = "SELECT * FROM countries";
 		$_query .= " WHERE country_code='" . $row['country'] . "'";
 		$_result = @mysqli_query($MySQL, $_query);
 		$_row = @mysqli_fetch_array($_result);
 		print '
-		<p><b>Country:</b> ' .$_row['country_name'] . '</p>
-		<p><b>Date:</b> ' . pickerDateToMysql($row['date']) . '</p>
+		<p><b>Država:</b> ' .$_row['country_name'] . '</p>
+		<p><b>Datum:</b> ' . pickerDateToMysql($row['date']) . '</p>
 		<p><a href="index.php?menu='.$menu.'&amp;action='.$action.'">Natrag</a></p>';
 	}
 	#Edit user profile

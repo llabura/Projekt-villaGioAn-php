@@ -74,7 +74,7 @@ print '
         print '
         </main>
         <footer>
-            <p>Copyright &copy; 2020 Lucija Labura<a href="https://github.com/llabura/Projekt-villa-GioAn"><img src="img/github_icon.png" title="Github" alt="Github"></a></p>
+            <p>Copyright &copy; 2020 Lucija Labura<a href="https://github.com/llabura?tab=repositories"><img src="img/github_icon.png" title="Github" alt="Github"></a></p>
         </footer>
     </body>
     </html>';

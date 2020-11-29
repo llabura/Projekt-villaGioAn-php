@@ -1,0 +1,290 @@
+body, html {
+	font-family: 'Tahoma', sans-serif;
+	margin: 0;
+	font-size: 16px;
+}
+header {
+	display: block;
+	width: 100%;
+}
+.villa-image {
+	background-image: url("../img/1slikaSnatpisom.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	height: 500px;
+}
+.villa-subimage {
+	background-image: url("../img/1slikaSnatpisom.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	height: 200px;
+}
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+li {
+	float: left;
+}
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+li a:hover {
+	background-color: rgb(82, 60, 60);
+}
+h1,h2 {
+	text-decoration: transparent;		
+	margin: 0.5em;		
+	font-size: 2em;		
+	font-family: 'Times New Roman', Times, serif;
+}
+h2 {
+	font-size: 1.5em;
+	color: #8b6827;
+}
+main {
+	margin: 2em;
+}
+main a {
+	color: #27318b;
+	text-decoration: none;
+}
+main a:hover {
+	color: #8b3727;
+	text-decoration: underline;
+}
+p {
+	margin: 1em 0;
+	line-height: 1.4em;
+	letter-spacing: 1px;
+}
+small {
+	color: red;
+}
+.news img {
+	width: 12%;
+	float: left;
+	padding: 0.5em 0;
+	margin: 0 1em 0 0;
+}
+.news h2 {
+	margin: 0.5em 0;
+	font-size: 1.5em;
+	color: #27318b;
+}
+.news hr {
+	margin: 1em 0;
+	border: 1px dotted #27318b;
+	clear: both;
+}
+.news time {
+	font-size: 90%;
+	font-style: italic;
+}
+figure {
+	padding: 0.5em;
+	margin: 0 1em 0.5em 0;
+	float: left;
+	width: 35%;
+	border: 1px solid black;
+}
+figcaption {
+	font-size: 90%;
+}
+img {
+	width: 100%;
+}
+video {
+	margin: 0 1em 1em 0;
+	float: left;
+}
+#contact {
+	margin: 1em 0
+}
+label {
+	display: block;
+}
+input[type=text], input[type=email], input[type=password], input[type=file], select, textarea {
+    width: 50%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+	font-family: 'Oswald', sans-serif;
+	font-size: 95%;
+}
+
+input[type=submit] {
+    display: block;
+	background-color: #4caf99;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+	width: 25%;
+}
+
+input[type=submit]:hover {
+    background-color: #4574a0;
+}
+footer {
+	background-color: #333;
+	padding: 0.1em;
+	clear: both;
+}
+footer p {
+	color: white;
+	text-align: center;
+	margin: 0.5em;
+}
+footer img {	
+	width: 20px;	
+}
+
+/* ADMINISTRATION WEB */
+.AddLink {
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    color: #FFFFFF !important;
+    display: block;
+    background-color: #0f67a1;
+    margin: 8px 2px;
+    padding: 3px;
+    width: 120px;
+    text-align: center;
+}
+/* Table */
+	table {
+		background: #f5f5f5;
+		border-collapse: separate;
+		box-shadow: inset 0 1px 0 #fff;
+		font-size: 12px;
+		line-height: 24px;
+		margin: 30px auto;
+		text-align: left;
+		width: 100%;
+	}	
+
+	th {
+		background: url(http://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
+		border-left: 1px solid #555;
+		border-right: 1px solid #777;
+		border-top: 1px solid #555;
+		border-bottom: 1px solid #333;
+		box-shadow: inset 0 1px 0 #999;
+		color: #fff;
+	  font-weight: bold;
+		padding: 10px 15px;
+		position: relative;
+		text-shadow: 0 1px 0 #000;	
+	}
+
+	th:after {
+		background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+		content: '';
+		display: block;
+		height: 25%;
+		left: 0;
+		margin: 1px 0 0 0;
+		position: absolute;
+		top: 25%;
+		width: 100%;
+	}
+
+	th:first-child {
+		border-left: 1px solid #777;	
+		box-shadow: inset 1px 1px 0 #999;
+	}
+
+	th:last-child {
+		box-shadow: inset -1px 1px 0 #999;
+	}
+
+	td {
+		border-right: 1px solid #fff;
+		border-left: 1px solid #e8e8e8;
+		border-top: 1px solid #fff;
+		border-bottom: 1px solid #e8e8e8;
+		padding: 10px 15px;
+		position: relative;
+		transition: all 300ms;
+	}
+
+	td:first-child {
+		box-shadow: inset 1px 0 0 #fff;
+	}	
+
+	td:last-child {
+		border-right: 1px solid #e8e8e8;
+		box-shadow: inset -1px 0 0 #fff;
+	}	
+
+	tr {
+		background: url(http://jackrugile.com/images/misc/noise-diagonal.png);	
+	}
+
+	tr:nth-child(odd) td {
+		background: #f1f1f1 url(http://jackrugile.com/images/misc/noise-diagonal.png);	
+	}
+
+	tr:last-of-type td {
+		box-shadow: inset 0 -1px 0 #fff; 
+	}
+
+	tr:last-of-type td:first-child {
+		box-shadow: inset 1px -1px 0 #fff;
+	}	
+
+	tr:last-of-type td:last-child {
+		box-shadow: inset -1px -1px 0 #fff;
+	}	
+
+	tbody:hover td {
+		color: transparent;
+		text-shadow: 0 0 3px #aaa;
+	}
+
+	tbody:hover tr:hover td {
+		color: rgb(92, 91, 91);
+	}
+	
+	/* End Table */
+
+#admin ul {
+	background-color: #dfdfdf;
+}
+#admin  li a {
+	color: black;
+}
+#admin li a:hover {
+	background-color: #c8a5a5;
+}
+@media screen and (max-width: 700px) {
+	figure {
+		width: 90%;
+		margin: 1em;
+	}
+	.news img {
+		width: 95%;
+		padding: 0.5em;
+		margin: 0 1em 0.5em 0.5em;
+	}
+	.news time {
+		margin: 0 0 0 1em;
+	}
+}

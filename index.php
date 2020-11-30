@@ -69,7 +69,10 @@ print '
 	else if ($menu == 6) { include("signin.php"); }
 	
 	# Admin webpage
-	else if ($menu == 7) { include("admin.php"); }
+    else if ($menu == 7) { include("admin.php"); }
+    
+    # Gallery
+    else if ($menu == 8) { include("gallery.php"); }
 	
         print '
         </main>

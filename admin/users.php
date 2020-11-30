@@ -3,7 +3,7 @@
 	
 	# Update user profile
 	if (isset($_POST['edit']) && $_POST['_action_'] == 'TRUE') {
-		$query  = "UPDATE users SET firstname='" . $_POST['firstname'] . "', lastname='" . $_POST['lastname'] . "', email='" . $_POST['email'] . "', username='" . $_POST['username'] . "', country='" . $_POST['country'] . "', archive='" . $_POST['archive'] . "'";
+		$query  = "UPDATE users SET firstname='" . $_POST['firstname'] . "', lastname='" . $_POST['lastname'] . "', email='" . $_POST['email'] . "', username='" . $_POST['username'] . "', country='" . $_POST['country'] . "', archive='" . $_POST['archive'] . "', archive='" . $_POST['archive'] . "', role='" . $_POST['role'] . "'";
         $query .= " WHERE id=" . (int)$_POST['edit'];
         $query .= " LIMIT 1";
         $result = @mysqli_query($MySQL, $query);
@@ -79,7 +79,7 @@
 				<label for="username">Korisničko ime *<small>(Username must have min 5 and max 10 char)</small></label>
 				<input type="text" id="username" name="username" value="' . $row['username'] . '" pattern=".{5,10}" placeholder="Username.." required><br>
 				
-				<label for="country">Država</label>
+				<label for="country">Država:</label>
 				<select name="country" id="country">
 					<option value="">molimo odaberite</option>';
 					#Select all countries from database webprog, table countries
@@ -88,10 +88,29 @@
 					while($_row = @mysqli_fetch_array($_result)) {
 						print '<option value="' . $_row['country_code'] . '"';
 						if ($row['country'] == $_row['country_code']) { print ' selected'; }
-						print '>' . $_row['country_name'] . '</option>';
+						print '>' . $_row['country_name'] . '</option> ';
 					}
+					print '
+					</select>';
+					
+					
+					if ($_SESSION['user']['role'] == 1) {
+						print'
+						<label for="country">Prava korisnika:</label>
+						<select name="role" class="form-control">
+							<option value="">Odaberi prava korisnika</option>';
+							$_query  = "SELECT * FROM roles";
+							$_result = @mysqli_query($MySQL, $_query);
+							while($_row = @mysqli_fetch_array($_result)) {
+								print '<option value="' . $_row['id'] . '"';
+								if ($row['role'] == $_row['id']) { print ' selected'; }
+								print '>' . $_row['role'] . '</option>';
+							}
+							print '
+							</select>';
+						}
 				print '
-				</select>
+				
 				
 				<label for="archive">Arhiviraj:</label><br />
 				<input type="radio" name="archive" value="Y"'; if($row['archive'] == 'Y') { echo ' checked="checked"'; $checked_archive = true; } echo ' /> DA &nbsp;&nbsp;

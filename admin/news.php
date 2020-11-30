@@ -1,7 +1,13 @@
-<?php 
+<?php
+
+    if (!isset($_SESSION['user']['valid']) || $_SESSION['user']['valid'] == 'false'){
+        header("Location: index.php?menu=6");
+	}
 	
-	#Add news
+    else if($_SESSION['user']['valid'] == 'true'){
+		#Add news
 	if (isset($_POST['_action_']) && $_POST['_action_'] == 'add_news') {
+	
 		$_SESSION['message'] = '';
 		# htmlspecialchars — Convert special characters to HTML entities
 		# http://php.net/manual/en/function.htmlspecialchars.php
@@ -31,89 +37,45 @@
 		
 		
 		$_SESSION['message'] .= '<p>Uspješno ste dodali vijesti!</p>';
+	
 		
 		# Redirect
 		header("Location: index.php?menu=7&action=2");
 	}
-	
-	# Update news
-	if (isset($_POST['_action_']) && $_POST['_action_'] == 'edit_news') {
-		$query  = "UPDATE news SET title='" . htmlspecialchars($_POST['title'], ENT_QUOTES) . "', description='" . htmlspecialchars($_POST['description'], ENT_QUOTES) . "', archive='" . $_POST['archive'] . "'";
-        $query .= " WHERE id=" . (int)$_POST['edit'];
-        $query .= " LIMIT 1";
-        $result = @mysqli_query($MySQL, $query);
-		
-		# picture
-        if($_FILES['picture']['error'] == UPLOAD_ERR_OK && $_FILES['picture']['name'] != "") {
-                
-			# strtolower - Returns string with all alphabetic characters converted to lowercase. 
-			# strrchr - Find the last occurrence of a character in a string
-			$ext = strtolower(strrchr($_FILES['picture']['name'], "."));
+        if (isset($_POST['edit']) && $_POST['_action_'] == 'TRUE') {
+            $query  = "UPDATE news SET title='" . $_POST['title'] . "', description='" . $_POST['article'] . "', picture='" . $_POST['picture'] . "'";
+            $query .= " WHERE id=" . (int)$_POST['edit'];
+            $query .= " LIMIT 1";
+            $result = @mysqli_query($MySQL, $query);
+            # Close MySQL connection
+            @mysqli_close($MySQL);
             
-			$_picture = (int)$_POST['edit'] . '-' . rand(1,100) . $ext;
-			copy($_FILES['picture']['tmp_name'], "news/".$_picture);
-			
-			
-			if ($ext == '.jpg' || $ext == '.png' || $ext == '.gif') { # test if format is picture
-				$_query  = "UPDATE news SET picture='" . $_picture . "'";
-				$_query .= " WHERE id=" . (int)$_POST['edit'] . " LIMIT 1";
-				$_result = @mysqli_query($MySQL, $_query);
-				$_SESSION['message'] .= '<p>Uspješno ste dodali sliku.</p>';
-			}
+            $_SESSION['message'] = '<p>Uspjesno ste unijeli promjene!</p>';
+            
+            # Redirect
+            header("Location: index.php?menu=7&action=1");
         }
-		
-		$_SESSION['message'] = '<p>Uspješno ste uredili vijesti!</p>';
-		
-		# Redirect
-		header("Location: index.php?menu=7&action=2");
-	}
-	# End update news
-	
-	# Delete news
-	if (isset($_GET['delete']) && $_GET['delete'] != '') {
-		
-		# Delete picture
-        $query  = "SELECT picture FROM news";
-        $query .= " WHERE id=".(int)$_GET['delete']." LIMIT 1";
-        $result = @mysqli_query($MySQL, $query);
-        $row = @mysqli_fetch_array($result);
-        @unlink("news/".$row['picture']); 
-		
-		# Delete news
-		$query  = "DELETE FROM news";
-		$query .= " WHERE id=".(int)$_GET['delete'];
-		$query .= " LIMIT 1";
-		$result = @mysqli_query($MySQL, $query);
+        if (isset($_GET['delete']) && $_GET['delete'] != '') {
+            if ($_SESSION['user']['role'] == 1) {
+            $query  = "DELETE FROM news";
+            $query .= " WHERE id=".(int)$_GET['delete'];
+            $query .= " LIMIT 1";
+            $result = @mysqli_query($MySQL, $query);
 
-		$_SESSION['message'] = '<p>Uspješno ste obrisali vijesti!</p>';
+            $_SESSION['message'] = '<p>Uspjesno ste obrisali clanak!</p>';
 		
-		# Redirect
-		header("Location: index.php?menu=7&action=2");
-	}
-	# End delete news
-	
-	
-	#Show news info
-	if (isset($_GET['id']) && $_GET['id'] != '') {
-		$query  = "SELECT * FROM news";
-		$query .= " WHERE id=".$_GET['id'];
-		$query .= " ORDER BY date DESC";
-		$result = @mysqli_query($MySQL, $query);
-		$row = @mysqli_fetch_array($result);
-		print '
-		<h2>Pregled vijesti</h2>
-		<div class="news">
-			<img src="news/' . $row['picture'] . '" alt="' . $row['title'] . '" title="' . $row['title'] . '">
-			<h2>' . $row['title'] . '</h2>
-			' . $row['description'] . '
-			<time datetime="' . $row['date'] . '">' . pickerDateToMysql($row['date']) . '</time>
-			<hr>
-		</div>
-		<p><a href="index.php?menu='.$menu.'&amp;action='.$action.'">Natrag</a></p>';
-	}
-	
-	#Add news 
+            # Redirect
+            header("Location: index.php?menu=7&action=1");
+			}else{
+				header("Location: index.php?menu=7&action=2");
+				print '<p>Zabranjeno</p>';
+				
+			}
+			
+		}
+		#Add news 
 	else if (isset($_GET['add']) && $_GET['add'] != '') {
+		if ($_SESSION['user']['role'] == 1 || $_SESSION['user']['role'] == 2) {
 		
 		print '
 		<h2>Dodaj vijesti</h2>
@@ -138,16 +100,23 @@
 		</form>
 		<p><a href="index.php?menu='.$menu.'&amp;action='.$action.'">Natrag</a></p>';
 	}
-	#Edit news
-	else if (isset($_GET['edit']) && $_GET['edit'] != '') {
-		$query  = "SELECT * FROM news";
-		$query .= " WHERE id=".$_GET['edit'];
-		$result = @mysqli_query($MySQL, $query);
-		$row = @mysqli_fetch_array($result);
-		$checked_archive = false;
+	else{
+		header("Location: index.php?menu=7&action=2");
+		print '<p>Zabranjeno</p>';
+		
+	}
+}
 
-		print '
-		<h2>Uredi vijesti</h2>
+        else if (isset($_GET['edit']) && $_GET['edit'] != '') {
+            if ($_SESSION['user']['role'] == 1 || $_SESSION['user']['role'] == 2) {
+                $query  = "SELECT * FROM news";
+                $query .= " WHERE id=".$_GET['edit'];
+                $result = @mysqli_query($MySQL, $query);
+                $row = @mysqli_fetch_array($result);
+                $checked_archive = false;
+                
+				print '
+		<h2>Edit news</h2>
 		<form action="" id="news_form_edit" name="news_form_edit" method="POST" enctype="multipart/form-data">
 			<input type="hidden" id="_action_" name="_action_" value="edit_news">
 			<input type="hidden" id="edit" name="edit" value="' . $row['id'] . '">
@@ -167,12 +136,18 @@
 			<hr>
 			
 			<input type="submit" value="Potvrdi">
+			
 		</form>
 		<p><a href="index.php?menu='.$menu.'&amp;action='.$action.'">Natrag</a></p>';
-	}
-	else {
-		print '
-		<h2>Vijesti</h2>
+            }
+            else {
+                header("Location: index.php?menu=7&action=2");
+				print '<p>Zabranjeno</p>';
+            }
+        }
+        else{
+        print'
+        <h2>News</h2>
 		<div id="news">
 			<table>
 				<thead>
@@ -180,9 +155,9 @@
 						<th width="16"></th>
 						<th width="16"></th>
 						<th width="16"></th>
-						<th>Naslov</th>
-						<th>Opis</th>
-						<th>Datum</th>
+						<th>Title</th>
+						<th>Description</th>
+						<th>Date</th>
 						<th width="16"></th>
 					</tr>
 				</thead>
@@ -216,10 +191,10 @@
 			print '
 				</tbody>
 			</table>
-			<a href="index.php?menu=' . $menu . '&amp;action=' . $action . '&amp;add=true" class="AddLink">Dodaj vijesti</a>
+			<a href="index.php?menu=' . $menu . '&amp;action=' . $action . '&amp;add=true" class="AddLink">Add news</a>
 		</div>';
 	}
-	
+}
 	# Close MySQL connection
 	@mysqli_close($MySQL);
 ?>
